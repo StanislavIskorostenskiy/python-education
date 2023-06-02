@@ -1,8 +1,7 @@
 
 # python-education.ru
+
 project for study python
-=======
-# Learning server for great things
 
 Userful dev commands:
 ```
