@@ -1,5 +1,5 @@
-<<<<<<< HEAD
-# python-education
+
+# python-education.ru
 project for study python
 =======
 # Learning server for great things
