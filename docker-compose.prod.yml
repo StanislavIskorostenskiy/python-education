@@ -1,0 +1,7 @@
+version: '3.2'
+
+services:
+  abc-interface:
+    container_name: "abc-interface-prod"
+    ports:
+      - "12345:12345"

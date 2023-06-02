@@ -1,0 +1,10 @@
+version: '3.2'
+
+services:
+  abc-interface:
+    container_name: "abc-interface-test"
+    entrypoint: ["pytest"]
+    volumes:
+      - ./interface:/interface
+    ports:
+      - "1234:1234"

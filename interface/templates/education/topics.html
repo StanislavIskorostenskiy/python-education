@@ -1,0 +1,113 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+{% load education_tags %}
+
+
+{% block title %}{% trans "Обучение" %} :: {% trans "Сниппет" %} {{ snippet.name }}{% endblock %}
+
+{% block content %}
+
+<ol class="breadcrumb page-breadcrumb">
+    <li class="breadcrumb-item"><a href="/">{% trans "Обучение" %}</a></li>
+    <li class="breadcrumb-item active">{% trans "Решение задач" %}</li>
+    <li class="position-absolute pos-top pos-right d-none d-sm-block">{% now 'd F Y' %}</span></li>
+</ol>
+<div class="col-xl-12">
+    <form action="" method="GET">
+        <div class="input-group input-group-lg mb-g">
+            <input type="text" class="form-control" placeholder="Поиск" aria-label="Search" aria-describedby="button-addon5", name="search">
+            <div class="input-group-append">
+                 <button class="input-group-text", type="submit"><i class="fal fa-search"></i></button>
+            </div>
+        </div>
+    </form>
+    <div class="card mb-g border shadow-0">
+        <div class="card-header">
+            <div class="row no-gutters align-items-center">
+                <div class="col">
+                    <span class="h6 font-weight-bold text-uppercase">{% trans "Разделы" %}</span>
+                </div>
+                {% if request.user.is_superuser %}
+                <div class="col d-flex align-items-center">
+                    <a href="{% url 'education:create_topic' %}" class="btn btn-success shadow-0 btn-sm ml-auto flex-shrink-0 waves-effect waves-themed">{% trans "Создать тему" %}</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>        
+        <div class="card-header p-0">
+            <div class="row no-gutters row-grid align-items-stretch">
+                <div class="col-12 col-md">
+                    <div class="text-uppercase text-muted py-2 px-3">{% trans "Тема" %}</div>
+                </div>
+                <div class="col-sm-6 col-md-2 col-xl-1 hidden-md-down">
+                    <div class="text-uppercase text-muted py-2 px-3">{% trans "Задачи" %}</div>
+                </div>
+                <div class="col-sm-6 col-md-3 hidden-md-down">
+                    <div class="text-uppercase text-muted py-2 px-6">{% trans "Последняя задача" %} </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="row no-gutters row-grid">
+                <!-- thread -->
+                {% for topic in topics %}
+                <div class="col-12">
+                    <div class="row no-gutters row-grid align-items-stretch">
+                        <div class="col-md">
+                            <div class="p-3">
+                                <div class="d-flex">
+                                    <span class="icon-stack display-4 mr-3 flex-shrink-0">
+                                        <i class="base-2 icon-stack-3x color-primary-400"></i>
+                                        <i class="base-10 text-white icon-stack-1x"></i>
+                                        <i class="ni md-profile color-primary-800 icon-stack-2x"></i>
+                                    </span>
+                                    <div class="d-inline-flex flex-column">
+                                        <a href="{% url 'education:topic_view' topic_id=topic.id %}" class="fs-lg fw-500 d-block">
+                                            {{ topic.name }} <span class="badge badge-success rounded">Active</span>
+                                        </a>
+                                        <div class="d-block text-muted fs-sm">
+                                            {{ topic.description }} 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 col-md-2 col-xl-1 hidden-md-down">
+                            <div class="p-3 p-md-3">
+                                <span class="d-block text-muted">{{ topic.snippet_set.count }}</span>
+                            </div>
+                        </div>
+                        <div class="col-8 col-md-3 hidden-md-down">
+                            <div class="p-3 p-md-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="d-inline-block align-middle status status-success status-sm mr-2">
+                                        <span class="profile-image-md rounded-circle d-block" style="background-image:url('img/demo/avatars/avatar-a.png'); background-size: cover;"></span>
+                                    </div>
+                                    <div class="flex-1 min-width-0">
+                                        {% if  topic.snippet_set.last %}
+                                        <a href="{% url 'education:snippet_view' snippet_id=topic.snippet_set.last.id %}" class="d-block text-truncate">
+                                            {{ topic.snippet_set.last.name }}
+                                        </a>
+                                        <div class="text-muted small text-truncate">
+                                           {{ topic.snippet_set.last.creation_date }}<a href="{% url 'education:snippet_view' snippet_id=topic.snippet_set.last.id %}" class="text-info">{{ topic.snippet_set.last.user_profile }}</a>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+
+

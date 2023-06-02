@@ -1,0 +1,42 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+{% load education_tags %}
+{% block title %}{% trans "Обучение" %} :: {% trans "Задача" %} {{ snippet.name }}{% endblock %}
+
+{% block content %}
+
+<ol class="breadcrumb page-breadcrumb">
+    <li class="breadcrumb-item"><a href="/">{% trans "Обучение" %}</a></li>
+    <li class="breadcrumb-item active"><a href="/education/topics/">Темы</a></li>
+    <li class="breadcrumb-item active">{% trans "Создать тему" %}</li>
+    <li class="position-absolute pos-top pos-right d-none d-sm-block">{% now 'd F Y' %}</span></li>
+</ol>
+<div id="panel-1" class="panel">
+    <div class="panel-hdr">
+        <h2>
+            {% trans "Тема" %} <span class="fw-300"><i>{{ topic }} </i></span>
+        </h2>
+    </div>
+    <div class="panel-container show">
+        <div class="panel-content">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="form-label" for="simpleinput">{% trans "Название" %}</label>
+                    {{ topic_form.name|attr:'class=form-control title'|attr:'maxlength=99' }}<br>
+                    <label class="form-label" for="simpleinput">{% trans "Описание" %}</label>
+                    {{ topic_form.description|attr:'class=form-control title'|attr:'maxlength=10000' }} 
+                </div>
+                <div class="panel-content border-faded border-left-0 border-right-0 border-bottom-0 d-flex flex-row align-items-center">
+                    <button class="btn btn-primary mr-auto waves-effect waves-themed" type="submit">{% trans "Сохранить" %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block js %}
+{% endblock %}

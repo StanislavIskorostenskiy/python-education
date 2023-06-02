@@ -1,0 +1,84 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+{% load education_tags %}
+{% block title %}{% trans "Обучение" %} :: {% trans "Сниппет" %} {{ snippet.name }}{% endblock %}
+
+{% block content %}
+<div class="col-xl-12">
+    <ol class="breadcrumb page-breadcrumb">
+        <li class="breadcrumb-item"><a href="/">{{ HOST_PRETTY }}</a></li>
+        <li class="breadcrumb-item active"><a href="/education/topics/">{% trans "Темы" %}</a></li>
+        <li class="breadcrumb-item active">{% trans "Создать тему" %}</li>
+        <li class="position-absolute pos-top pos-right d-none d-sm-block">{% now 'd F Y' %}</span></li>
+    </ol>
+    <div id="panel-1" class="panel">
+        <div class="panel-hdr">
+            <h2>
+                {% trans "Тема" %} <span class="fw-300"><i>{{ snippet.names }}</i></span>
+            </h2>
+        </div>
+        {% if request.user.is_superuser %}
+        <div class="panel-container show">
+            <form action="" method="POST">
+                {% csrf_token %}
+                 <div class="panel-content">
+                    <form>
+                        <div class="form-group">
+                            <label class="form-label" for="simpleinput">{% trans "Название" %}</label>
+                            {{ snippet_form.name|attr:'class=form-control title'|attr:'maxlength=99' }}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="example-email-2">{% trans "Описание" %}</label>
+                            {{ snippet_form.description|attr:'class=form-control title'|attr:'maxlength=10000' }}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="example-email-2">{% trans "Сложность" %}</label>
+                            {{ snippet_form.complexity|attr:'class=form-control title'|attr:'maxlength=99' }}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="example-email-2">{% trans "Пример" %}</label>
+                            {{ snippet_form.example|attr:'class=form-control title'|attr:'maxlength=10000' }}
+                        </div>
+                        <button class="btn btn-primary waves-effect waves-themed" type="submit" name="save">{% trans "Сохранить" %}</button>
+                        <button class="btn btn-danger waves-effect waves-themed" type="submit" name="delete">{% trans "Удалить" %}</button>
+                    </form>                      
+                </div>
+            </form>          
+        </div>
+        {% endif %}   
+    </div>
+    <div id="panel-5" class="panel">
+        <div class="panel-container show">
+            <div class="panel-content">
+                <div class="position-relative overflow-auto" style="height: 300px;">
+                    <nav class="navbar navbar-excdpand-lg navbar-dark bg-primary bg-primary-gradient">
+                        <a class="navbar-brand d-flex align-items-center fw-500">
+                            {% trans "Описание" %}
+                        </a>
+                        <div class="collapse navbar-collapse" id="navbarSticky">
+                        </div>
+                    </nav>
+                    <br>           
+                    <p>{{ snippet.description|linebreaksbr }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="panel-container show">
+            <div class="panel-content">
+                <div class="position-relative overflow-auto" style="height: 300px;">
+                    <nav class="navbar navbar-expand-lg navbar-dark bg-primary bg-primary-gradient">
+                        <a class="navbar-brand d-flex align-items-center fw-500">
+                            {% trans "Пример" %}
+                        </a>
+                    </nav>
+                    {% if snippet.example %}  
+                        <pre><code>{{ snippet.example }}</code></pre>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+{% endblock %}
